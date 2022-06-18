@@ -1,0 +1,93 @@
+﻿@page
+@model BookAppDemo.Pages.BookList.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<div class="card bg-dark mt-5">
+    <div class="card-header">
+        <h4 class="text-danger">Delete this Book from the list</h4>
+    </div>
+    <div class="card-body">
+    <dl>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Author)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Author)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Regdate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Regdate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Updatedate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Updatedate)
+        </dd>
+    </dl>
+    
+    @*<form method="post">*@
+       @* <input type="hidden" asp-for="Book.Id" />*@
+        <a onclick="Delete('/api/book?id='+@Model.Book.Id)" class="btn btn-outline-danger">Delete</a> |
+        <a asp-page="./Index" class="btn btn-outline-info" id="backToList">Back to List</a>
+    @*</form>*@
+</div>
+</div>
+@section Scripts
+{
+<script>
+        function Delete(url) {          
+        swal(
+            {
+                title: "Are you sure want to delete this Book : @Model.Book.Name ?",
+                icon: "warning",
+                dangerMode: true,
+                 buttons: true,
+            }
+        ).then((willDelete) => {
+            if (willDelete)
+             {
+                $.ajax({
+                    type: "DELETE",
+                    url: url,
+                    success: function (data)
+                    {
+                        swal({
+                    title: "Success",
+                    text: "Data has been deleted successfully",
+                    type: 'success',
+                    icon: 'success',
+                    showCancelButton: false,
+                    allowOutsideClick: false,
+                    confirmButtonColor: "green",
+                    confirmButtonText: "Ok"
+                }).then(function () {
+                     document.getElementById("backToList").click();
+                      });
+                    
+                    }
+                })
+            }
+
+        }
+        )
+    }
+</script>
+}
+

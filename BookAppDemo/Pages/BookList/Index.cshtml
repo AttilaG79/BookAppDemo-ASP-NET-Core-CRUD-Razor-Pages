@@ -1,0 +1,133 @@
+﻿@page
+@model BookAppDemo.Pages.BookList.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<!-- Sweetalert Javascript with C# Start Create method-->
+@if(TempData["Sweet"] != null)
+{
+    @section Scripts{
+
+                <script>
+            $(function () {
+                swal({
+                    title: "Success",
+                    text: " New Book has been stored successfully",
+                    type: 'success',
+                    icon: 'success',
+                    showCancelButton: false,
+                    allowOutsideClick: false,
+                    confirmButtonColor: "green",
+                    confirmButtonText: "Ok"
+                }).then(function () {
+                });
+            })
+        </script>
+
+    }
+}
+<!-- Sweetalert Javascript with C# End Create method-->
+<!-- Sweetalert Javascript with C# Start Edit method-->
+@if(TempData["SweetEdit"] != null)
+{
+    @section Scripts{
+                <script>
+            $(function () {
+                swal({
+                    title: "Saved Changes",
+                    text: " New Book has been changed successfully",
+                    type: 'info',
+                    icon: 'info',
+                    showCancelButton: false,
+                    allowOutsideClick: false,
+                    confirmButtonColor: "blue",
+                    confirmButtonText: "Ok"
+                }).then(function () {
+                });
+            })
+        </script>
+
+    }
+}
+<!-- Sweetalert JAvascript with C# End Edit method-->
+
+<div class="row mb-2">
+    <div class="col-4">
+        <a asp-page="Create" class="btn btn-outline-success">Create New Book</a>
+    </div>
+    <div class="col-4 text-center">
+       <h6 class="text-info">The number of Books : <span class="badge rounded-pill bg-info text-black">@ViewData["GetNumber"]</span></h6> 
+    </div>
+</div>
+<table class="table bg-dark table-hover" id="example">
+    <thead>
+        <tr>
+            <th class="text-center text-success">
+                @Html.DisplayNameFor(model => model.Book[0].Name)
+            </th>
+            <th class="text-center text-success">
+                @Html.DisplayNameFor(model => model.Book[0].Author)
+            </th>
+            <th class="text-center text-success">
+                @Html.DisplayNameFor(model=>model.Book[0].Categories)
+            </th>
+            <th class="text-center text-success">
+                @Html.DisplayNameFor(model => model.Book[0].Price)
+            </th>
+            <th class="text-center text-success">          
+                @Html.DisplayNameFor(model => model.Book[0].Regdate)
+            </th>          
+            <th class="text-center text-success">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Book) {
+
+            var dateNow = DateTime.Now.Date;
+
+        <tr id="tableRowHover">
+            <td class="text-center">
+                    @if(dateNow == item.Regdate.Date)
+                    {
+                        @Html.DisplayFor(modelItem => item.Name) <span>&nbsp;</span> <span class="badge rounded-pill bg-danger text-white">!New!</span>
+                    }
+                    else 
+                    @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem=>item.Categories)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td class="text-center">
+                <h6><span class="badge rounded-pill bg-success text-black">Registrated : @Html.DisplayFor(modelItem => item.Regdate)</span></h6>
+                <h6><span class="badge rounded-pill bg-info text-black">Last Updated: @Html.DisplayFor(modelItem=>item.Updatedate)</span></h6>
+            </td>          
+            <td>
+                <div class="text-center">
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-warning">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn  btn-outline-danger">Delete</a>
+                </div>               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<style>
+    #tableRowHover:hover{
+        background-color:#484889;      
+        font-size:14.5px;
+    }
+</style>
+
+

@@ -1,0 +1,81 @@
+﻿@page
+@model BookAppDemo.Pages.BookList.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card text-center bg-dark mt-5">
+  <div class="card-header">
+    <h4 class="border-info"><span class="badge bg-dark text-info">Change the Book details</span></h4>
+  </div>
+  <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+            <input type="hidden" asp-for="Book.Id"/>
+            <div class="row col-md-8 offset-md-2 text-center">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="Book.Name" class="control-label"></label>&#42;
+                        <input asp-for="Book.Name" class="form-control" id="inputFocusEdit"/>
+                        <span asp-validation-for="Book.Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="Book.Author" class="control-label"></label>&#42;
+                        <input asp-for="Book.Author" class="form-control" id="inputFocusEdit" />
+                        <span asp-validation-for="Book.Author" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-8 offset-md-2">
+                <div class="col">
+                     <div class="form-group">
+                        <label asp-for="Book.Categories" class="control-label"></label>&#42;
+                        <select asp-for="Book.Categories" class="form-select" id="inputFocusEdit">
+                            <option value="0" disabled selected>-- Select a Category --</option>
+                            <option value="1">Classic</option>
+                            <option value="2">Drama</option>
+                            <option value="3">Fantasy</option>
+                            <option value="4">Romance</option>
+                            <option value="5">Thriller</option>
+                            <option value="6">Science</option>
+                            <option value="7">Kids</option>
+                        </select>
+                        <span asp-validation-for="Book.Categories" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="Book.Price" class="control-label"></label>&#42;
+                        <input asp-for="Book.Price" class="form-control"id="inputFocusEdit" />
+                        <span asp-validation-for="Book.Price" class="text-danger"></span>
+                    </div>
+                 </div>
+            </div>
+             <div class="row  mt-4 text-center">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="submit" value="Save Changes" class="btn btn-outline-primary" /> |
+                        <a asp-page="./Index" class="btn btn-outline-info"> Back to List </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-center">
+        <h6>&#42; This field is required!</h6>
+    </div>
+</div>
+<style>
+    #inputFocusEdit:focus{
+        background-color:#D5F0EF;
+        border:1px solid;
+        border-color:#62A6F3
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
